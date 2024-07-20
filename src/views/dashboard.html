@@ -31,6 +31,10 @@
 
   <main>
     <div class="main-content">
+      <div class="alert alert-danger alert-dismissible fade">
+        <strong>Error!</strong> A problem has been occurred while retrieving your transaction data.
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
       <div class="container py-5">
         <h1 class="mb-3">Dashboard</h1>
 
@@ -79,6 +83,7 @@
               <i class="bi bi-plus-lg me-1"></i>Tambah Transaksi
             </a>
           </div>
+
           <div class="row mt-3">
             <div class="col">
               <table class="table table-sm table-bordered" id="recordsTable">
