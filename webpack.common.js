@@ -82,6 +82,19 @@ module.exports = {
       ...htmlWebpackPluginConfig,
     }),
 
+    new HtmlWebpackPlugin({
+      title: 'Add Records',
+      filename: 'transactions/add.html',
+      template: path.resolve(__dirname, 'src/views/transactions/add.html'),
+      ...htmlWebpackPluginConfig,
+    }),
+    new HtmlWebpackPlugin({
+      title: 'Edit Records',
+      filename: 'transactions/edit.html',
+      template: path.resolve(__dirname, 'src/views/transactions/edit.html'),
+      ...htmlWebpackPluginConfig,
+    }),
+
     new CopyWebpackPlugin({
       patterns: [
         {
