@@ -22,8 +22,8 @@
         <form class="row g-3" id="addRecordForm" novalidate>
           <div class="col-12 col-md-6">
             <label for="validationCustomRecordName" class="form-label">Nama</label>
-            <input type="text" class="form-control" id="validationCustomRecordName" required />
-            <div class="invalid-feedback">Wajib diisi</div>
+            <input-with-validation type="text" inputId="validationCustomRecordName" invalidFeedbackMessage="Wajib diisi"
+              required></input-with-validation>
           </div>
           <div class="col-12 col-md-6">
             <label for="validationCustomAmount" class="form-label">Jumlah Uang</label>
