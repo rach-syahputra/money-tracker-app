@@ -44,16 +44,8 @@
           </div>
           <div class="col-12 col-md-6">
             <label for="validationCustomEvidence" class="form-label">Bukti tagihan</label>
-            <div style="width: 100%; height: 15rem" class="mb-3">
-              <img class="img-fluid h-100" src="" alt="Evidence of records" id="validationCustomEvidenceImg" />
-              <div class="w-100 h-100 d-none" style="
-                  background-repeat: no-repeat;
-                  background-position: center;
-                  background-size: contain;
-                " id="validationCustomEvidenceImgChange"></div>
-            </div>
-            <input type="file" class="form-control" id="validationCustomEvidence" accept="image/*" required />
-            <div class="invalid-feedback">Wajib diisi</div>
+            <input-image-with-preview id="inputImagePreviewEdit" inputId="validationCustomEvidence"
+              invalidFeedbackMessage="Wajib diisi"></input-image-with-preview>
           </div>
           <div class="col-12 col-md-6">
             <div class="form-label">Tipe</div>
