@@ -27,20 +27,14 @@
           </div>
           <div class="col-12 col-md-6">
             <label for="validationCustomAmount" class="form-label">Jumlah Uang</label>
-            <div class="input-group has-validation">
-              <span class="input-group-text">Rp</span>
-              <input type="number" class="form-control" id="validationCustomAmount" aria-describedby="inputGroupPrepend"
-                required />
-              <div class="invalid-feedback">Wajib diisi</div>
-            </div>
+            <input-group-with-validation type="number" inputGroupText="Rp" inputId="validationCustomAmount"
+              invalidFeedbackMessage="Wajib diisi" validation required></input-group-with-validation>
           </div>
           <div class="col-12 col-md-6">
             <label for="validationCustomDate" class="form-label">Tanggal</label>
-            <div class="input-group has-validation">
-              <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-              <input type="datetime-local" class="form-control" id="validationCustomDate" required />
-              <div class="invalid-feedback">Wajib diisi</div>
-            </div>
+            <input-group-with-validation type="datetime-local" inputId="validationCustomDate"
+              inputGroupIcon="bi-calendar-event" invalidFeedbackMessage="Wajib diisi" validation
+              required></input-group-with-validation>
           </div>
           <div class="col-12 col-md-6">
             <label for="validationCustomNotes" class="form-label">Catatan</label>
