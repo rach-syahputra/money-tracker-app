@@ -1,7 +1,30 @@
 const Edit = {
   async init() {
+    this._initialUI()
     await this._initialData()
     this._initialListener()
+  },
+
+  _initialUI() {
+    const listInputRadioTransactionType = [
+      {
+        inputId: 'recordType1',
+        value: 'income',
+        caption: 'Pemasukan',
+        required: true,
+      },
+      {
+        inputId: 'recordType2',
+        value: 'expense',
+        caption: 'Pengeluaran',
+        required: true,
+      },
+    ]
+    const inputRadioTransactionTypeEdit = document.querySelector('#inputRadioTransactionTypeEdit')
+    inputRadioTransactionTypeEdit.setAttribute(
+      'listRadio',
+      JSON.stringify(listInputRadioTransactionType),
+    )
   },
 
   async _initialData() {
