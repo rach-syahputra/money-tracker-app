@@ -5,6 +5,9 @@ import '../scss/main.scss'
 import Dashboard from './pages/dashboard'
 import * as bootstrap from 'bootstrap'
 
+// Import components
+import './components/index'
+
 const routes = {
   '/': Dashboard,
 }
