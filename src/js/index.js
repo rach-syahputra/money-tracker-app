@@ -1,15 +1,19 @@
 // Import our custom CSS
 import '../scss/main.scss'
 
-// Import javascript file as needed
-import Dashboard from './pages/dashboard'
-import * as bootstrap from 'bootstrap'
-
 // Import components
 import './components/index'
 
+// Import javascript file as needed
+import Dashboard from './pages/dashboard'
+import Add from './pages/transactions/add'
+import Edit from './pages/transactions/edit'
+import * as bootstrap from 'bootstrap'
+
 const routes = {
   '/': Dashboard,
+  '/transactions/add.html': Add,
+  '/transactions/edit.html': Edit,
 }
 
 const detectRoute = () => routes[window.location.pathname]
