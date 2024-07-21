@@ -45,11 +45,6 @@ const Edit = {
   },
 
   _initialListener() {
-    const evidenceInput = document.querySelector('#validationCustomEvidence')
-    evidenceInput.addEventListener('change', () => {
-      this._updatePhotoPreview()
-    })
-
     const editRecordForm = document.querySelector('#editRecordForm')
     editRecordForm.addEventListener(
       'submit',
@@ -91,25 +86,6 @@ const Edit = {
       description: descriptionInput.value,
       type: typeInput.value,
     }
-  },
-
-  _updatePhotoPreview() {
-    const evidenceImg = document.querySelector('#validationCustomEvidenceImg')
-    const evidenceImgChange = document.querySelector('#validationCustomEvidenceImgChange')
-    const evidenceImgInput = document.querySelector('#validationCustomEvidence')
-
-    const photo = evidenceImgInput.files[0]
-    if (!photo) return
-
-    const reader = new FileReader()
-    reader.onload = (event) => {
-      evidenceImg.classList.add('d-none')
-      evidenceImgChange.classList.remove('d-none')
-
-      evidenceImgChange.style.backgroundImage = `url('${event.target.result}')`
-    }
-
-    reader.readAsDataURL(photo)
   },
 
   _populateTransactionToForm(transactionRecord = null) {
