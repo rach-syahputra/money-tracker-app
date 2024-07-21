@@ -39,8 +39,8 @@
           </div>
           <div class="col-12 col-md-6">
             <label for="validationCustomNotes" class="form-label">Catatan</label>
-            <textarea class="form-control" id="validationCustomNotes" rows="3"></textarea>
-            <div class="invalid-feedback">Wajib diisi</div>
+            <textarea-with-validation inputId="validationCustomNotes" invalidFeedbackMessage="Wajib diisi"
+              required></textarea-with-validation>
           </div>
           <div class="col-12 col-md-6">
             <label for="validationCustomEvidence" class="form-label">Bukti tagihan</label>
