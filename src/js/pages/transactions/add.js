@@ -1,6 +1,29 @@
 const Add = {
   async init() {
+    this._initialUI()
     this._initialListener()
+  },
+
+  _initialUI() {
+    const listInputRadioTransactionType = [
+      {
+        inputId: 'recordType1',
+        value: 'income',
+        caption: 'Pemasukan',
+        required: true,
+      },
+      {
+        inputId: 'recordType2',
+        value: 'expense',
+        caption: 'Pengeluaran',
+        required: true,
+      },
+    ]
+    const inputRadioTransactionTypeAdd = document.querySelector('#inputRadioTransactionTypeAdd')
+    inputRadioTransactionTypeAdd.setAttribute(
+      'listRadio',
+      JSON.stringify(listInputRadioTransactionType),
+    )
   },
 
   _initialListener() {
