@@ -1,6 +1,8 @@
 import axios from 'axios'
 import Config from '../config/config'
 import ApiEndpoint from '../config/api-endpoint'
+import { auth, db } from '../utils/firebase'
+import { addDoc, collection } from 'firebase/firestore'
 
 const Transactions = {
   async getAll() {
@@ -20,13 +22,11 @@ const Transactions = {
   },
 
   async store({ name, date, amount, type, description, evidence }) {
+    const transactionsRef = collection(db, 'transactions')
     const data = { name, date, amount, type, description, evidence }
-
-    return await axios.post(ApiEndpoint.STORE_TRANSACTION, data, {
-      headers: {
-        Authorization: `Bearer ${Utils.getUserToken(Config.USER_TOKEN_KEY)}`,
-        'Content-Type': 'multipart/form-data',
-      },
+    return await addDoc(transactionsRef, {
+      ...data,
+      userId: auth.currentUser.uid,
     })
   },
 
