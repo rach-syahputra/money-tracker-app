@@ -1,10 +1,7 @@
 import Auth from '../../network/auth'
-import CheckUserAuth from './check-user-auth'
 
 const Register = {
   async init() {
-    CheckUserAuth.checkLoginState()
-
     this._initialListener()
   },
 
@@ -37,9 +34,9 @@ const Register = {
           password: formData.password,
         })
 
-        if (!response.data) {
-          return console.error(response)
-        }
+        await Auth.updateProfile(response.user, {
+          displayName: formData.name,
+        })
 
         window.alert('Registered a new user')
         this._goToLoginPage()
