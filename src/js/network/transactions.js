@@ -47,6 +47,9 @@ const Transactions = {
   async update({ id, name, date, amount, type, description, evidence }) {
     const transactionRef = doc(db, 'transactions', id)
     const data = { name, date, amount, type, description, evidence }
+
+    if (!data.evidence) delete data.evidence
+
     return await updateDoc(transactionRef, data)
   },
 
