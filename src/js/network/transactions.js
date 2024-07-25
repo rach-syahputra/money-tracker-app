@@ -30,11 +30,9 @@ const Transactions = {
   },
 
   async getById(id) {
-    return await axios.get(ApiEndpoint.GET_BY_ID_TRANSACTION(id), {
-      headers: {
-        Authorization: `Bearer ${Utils.getUserToken(Config.USER_TOKEN_KEY)}`,
-      },
-    })
+    const transactionRef = doc(db, 'transactions', id)
+    const docSnapshot = await getDoc(transactionRef)
+    return docSnapshot.data()
   },
 
   async store({ name, date, amount, type, description, evidence }) {
