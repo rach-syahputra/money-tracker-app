@@ -39,8 +39,9 @@ const Transactions = {
   },
 
   async getById(id) {
-    const transactionRef = doc(db, 'transactions', id)
-    const docSnapshot = await getDoc(transactionRef)
+    const userId = auth.currentUser.uid
+    const transactionsRef = doc(db, `users/${userId}/transactions`, id)
+    const docSnapshot = await getDoc(transactionsRef)
     return docSnapshot.data()
   },
 
@@ -53,13 +54,14 @@ const Transactions = {
     })
   },
 
-  async update({ id, name, date, amount, type, description, evidence }) {
-    const transactionRef = doc(db, 'transactions', id)
-    const data = { name, date, amount, type, description, evidence }
+  async update({ id, name, date, amount, type, description, evidence, updatedAt }) {
+    const userId = auth.currentUser.uid
+    const transactionsRef = doc(db, `users/${userId}/transactions`, id)
+    const data = { name, date, amount, type, description, evidence, updatedAt }
 
     if (!data.evidence) delete data.evidence
 
-    return await updateDoc(transactionRef, data)
+    return await updateDoc(transactionsRef, data)
   },
 
   async destroy(id) {

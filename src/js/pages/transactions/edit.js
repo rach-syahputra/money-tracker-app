@@ -1,3 +1,4 @@
+import { serverTimestamp } from 'firebase/firestore'
 import Transactions from '../../network/transactions'
 
 const Edit = {
@@ -38,6 +39,7 @@ const Edit = {
 
     try {
       const response = await Transactions.getById(transactionId)
+
       this._populateTransactionToForm(response)
     } catch (error) {
       console.error(error)
@@ -74,7 +76,8 @@ const Edit = {
         const response = await Transactions.update({
           ...formData,
           id: this._getTransactionId(),
-          evidence: formData.evidence.name,
+          evidence: formData.evidence?.name,
+          updatedAt: serverTimestamp(),
         })
 
         window.alert(`Transaction with id ${this._getTransactionId()} has been edited`)
@@ -108,6 +111,17 @@ const Edit = {
       throw new Error(
         `Parameter transactionRecord should be an object. The value is ${transactionRecord}`,
       )
+    }
+
+    if (
+      transactionRecord.date &&
+      transactionRecord.date.seconds !== undefined &&
+      transactionRecord.date.nanoseconds !== undefined
+    ) {
+      const dateObj = new Date(
+        transactionRecord.date.seconds * 1000 + transactionRecord.date.nanoseconds / 1000000,
+      )
+      transactionRecord.date = this._formatDate(dateObj)
     }
 
     const nameInput = document.querySelector('#validationCustomRecordName')
@@ -148,6 +162,18 @@ const Edit = {
   _getTransactionId() {
     const searchParamEdit = new URLSearchParams(window.location.search)
     return searchParamEdit.has('id') ? searchParamEdit.get('id') : null
+  },
+
+  _formatDate(date) {
+    const pad = (num) => num.toString().padStart(2, '0')
+
+    const year = date.getFullYear()
+    const month = pad(date.getMonth() + 1) // Months are zero-based
+    const day = pad(date.getDate())
+    const hours = pad(date.getHours())
+    const minutes = pad(date.getMinutes())
+
+    return `${year}-${month}-${day}T${hours}:${minutes}`
   },
 
   _goToDashboardPage() {
