@@ -51,11 +51,8 @@ const Transactions = {
   },
 
   async destroy(id) {
-    return await axios.delete(ApiEndpoint.DESTROY_TRANSACTION(id), {
-      headers: {
-        Authorization: `Bearer ${Utils.getUserToken(Config.USER_TOKEN_KEY)}`,
-      },
-    })
+    const transactionRef = doc(db, 'transactions', id)
+    return await deleteDoc(transactionRef)
   },
 }
 
