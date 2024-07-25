@@ -1,3 +1,4 @@
+import Transactions from '../network/transactions'
 import CheckUserAuth from './auth/check-user-auth'
 
 const Dashboard = {
@@ -10,14 +11,18 @@ const Dashboard = {
 
   async _initialData() {
     try {
-      const fetchRecords = await fetch('/data/DATA.json')
-      const responseRecords = await fetchRecords.json()
+      const response = await Transactions.getAll()
 
-      this._userTransactionsHistory = responseRecords.results.transactionsHistory
+      if (!response.data) {
+        return console.error(response)
+      }
+
+      const responseRecords = response.data.results
+      this._userTransactionsHistory = responseRecords.transactionsHistory
       this._populateTransactionsRecordToTable(this._userTransactionsHistory)
       this._populateTransactionsDataToCard(this._userTransactionsHistory)
     } catch (error) {
-      this._displayErrorAlert()
+      console.error(error)
     }
   },
 
