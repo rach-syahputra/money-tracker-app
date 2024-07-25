@@ -12,6 +12,7 @@ import Register from './pages/auth/register'
 import Login from './pages/auth/login'
 import * as bootstrap from 'bootstrap'
 import './utils/firebase'
+import CheckUserAuth from './pages/auth/check-user-auth'
 
 const routes = {
   '/': Dashboard,
@@ -35,6 +36,8 @@ const initPages = () => {
 
 window.addEventListener('DOMContentLoaded', async () => {
   initPages()
+
+  CheckUserAuth.checkLoginState()
 
   const route = detectRoute()
   route.init()
