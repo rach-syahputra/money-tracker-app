@@ -8,14 +8,7 @@ const Dashboard = {
 
   async _initialData() {
     try {
-      const response = await Transactions.getAll()
-
-      if (!response.data) {
-        return console.error(response)
-      }
-
-      const responseRecords = response.data.results
-      this._userTransactionsHistory = responseRecords.transactionsHistory
+      this._userTransactionsHistory = await Transactions.getAll()
       this._populateTransactionsRecordToTable(this._userTransactionsHistory)
       this._populateTransactionsDataToCard(this._userTransactionsHistory)
     } catch (error) {
