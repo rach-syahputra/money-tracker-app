@@ -44,10 +44,10 @@ const Transactions = {
     return docSnapshot.data()
   },
 
-  async store({ name, date, amount, type, description, evidence }) {
+  async store({ name, date, amount, type, description, evidence, createdAt, updatedAt }) {
     const userId = auth.currentUser.uid
     const transactionsRef = collection(db, `users/${userId}/transactions`)
-    const data = { name, date, amount, type, description, evidence }
+    const data = { name, date, amount, type, description, evidence, createdAt, updatedAt }
     return await addDoc(transactionsRef, {
       ...data,
     })

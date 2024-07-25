@@ -1,3 +1,4 @@
+import { serverTimestamp } from 'firebase/firestore'
 import Transactions from '../../network/transactions'
 
 const Add = {
@@ -54,6 +55,8 @@ const Add = {
         const response = await Transactions.store({
           ...formData,
           evidence: formData.evidence.name,
+          createdAt: serverTimestamp(),
+          updatedAt: null,
         })
 
         window.alert('New transaction added successfully')
