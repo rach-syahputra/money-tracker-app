@@ -16,9 +16,10 @@ import {
 
 const Transactions = {
   async getAll() {
-    const transactionsRef = collection(db, 'transactions')
-    const transactionsQuery = query(transactionsRef, where('userId', '==', auth.currentUser.uid))
-    const querySnapshot = await getDocs(transactionsQuery)
+    const userId = auth.currentUser.uid
+    console.log(userId)
+    const transactionsRef = collection(db, `users/${userId}/transactions`)
+    const querySnapshot = await getDocs(transactionsRef)
     const transactions = []
     querySnapshot.forEach((item) => {
       const data = item.data()
