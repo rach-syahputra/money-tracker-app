@@ -36,10 +36,6 @@ const Dashboard = {
         try {
           const response = await Transactions.destroy(recordId)
 
-          if (!response.data) {
-            return console.error(response)
-          }
-
           window.alert('Transaction has been destroyed')
           window.location.href = '/'
         } catch (error) {
