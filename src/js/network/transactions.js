@@ -21,11 +21,19 @@ const Transactions = {
     const querySnapshot = await getDocs(transactionsQuery)
     const transactions = []
     querySnapshot.forEach((item) => {
+      const data = item.data()
+
+      if (data.date && data.date.seconds !== undefined && data.date.nanoseconds !== undefined) {
+        const dateObj = new Date(data.date.seconds * 1000 + data.date.nanoseconds / 1000000)
+        data.date = dateObj.toDateString()
+      }
+
       transactions.push({
         id: item.id,
-        ...item.data(),
+        ...data,
       })
     })
+    console.log(transactions)
     return transactions
   },
 
