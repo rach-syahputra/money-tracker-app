@@ -18,6 +18,12 @@ const Auth = {
   async logout() {
     return await signOut(auth)
   },
+
+  async updateProfile(user, { displayName = null } = {}) {
+    return await updateProfile(user, {
+      displayName,
+    })
+  },
 }
 
 export default Auth
