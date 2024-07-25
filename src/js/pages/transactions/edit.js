@@ -38,13 +38,7 @@ const Edit = {
 
     try {
       const response = await Transactions.getById(transactionId)
-
-      if (!response.data) {
-        return console.error(response)
-      }
-
-      const responseRecords = response.data.results
-      this._populateTransactionToForm(responseRecords)
+      this._populateTransactionToForm(response)
     } catch (error) {
       console.error(error)
     }
@@ -73,14 +67,15 @@ const Edit = {
       console.log(formData)
 
       try {
-        const response = await Transactions.update({
-          id: this._getTransactionId(),
-          ...formData,
-        })
-
-        if (!response.data) {
-          return console.error(response)
+        if (!formData.evidence) {
+          delete formData.evidence
         }
+
+        const response = await Transactions.update({
+          ...formData,
+          id: this._getTransactionId(),
+          evidence: formData.evidence.name,
+        })
 
         window.alert(`Transaction with id ${this._getTransactionId()} has been edited`)
         this._goToDashboardPage()
