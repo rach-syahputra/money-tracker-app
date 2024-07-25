@@ -45,14 +45,9 @@ const Transactions = {
   },
 
   async update({ id, name, date, amount, type, description, evidence }) {
+    const transactionRef = doc(db, 'transactions', id)
     const data = { name, date, amount, type, description, evidence }
-
-    return await axios.put(ApiEndpoint.UPDATE_TRANSACTION(id), data, {
-      headers: {
-        Authorization: `Bearer ${Utils.getUserToken(Config.USER_TOKEN_KEY)}`,
-        'Content-Type': 'multipart/form-data',
-      },
-    })
+    return await updateDoc(transactionRef, data)
   },
 
   async destroy(id) {
