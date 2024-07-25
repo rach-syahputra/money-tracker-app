@@ -11,6 +11,7 @@ import Edit from './pages/transactions/edit'
 import Register from './pages/auth/register'
 import Login from './pages/auth/login'
 import * as bootstrap from 'bootstrap'
+import './utils/firebase'
 
 const routes = {
   '/': Dashboard,
