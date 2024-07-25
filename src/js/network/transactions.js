@@ -2,15 +2,31 @@ import axios from 'axios'
 import Config from '../config/config'
 import ApiEndpoint from '../config/api-endpoint'
 import { auth, db } from '../utils/firebase'
-import { addDoc, collection } from 'firebase/firestore'
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from 'firebase/firestore'
 
 const Transactions = {
   async getAll() {
-    return await axios.get(ApiEndpoint.GET_ALL_TRANSACTION, {
-      headers: {
-        Authorization: `Bearer ${Utils.getUserToken(Config.USER_TOKEN_KEY)}`,
-      },
+    const transactionsRef = collection(db, 'transactions')
+    const transactionsQuery = query(transactionsRef, where('userId', '==', auth.currentUser.uid))
+    const querySnapshot = await getDocs(transactionsQuery)
+    const transactions = []
+    querySnapshot.forEach((item) => {
+      transactions.push({
+        id: item.id,
+        ...item.data(),
+      })
     })
+    return transactions
   },
 
   async getById(id) {
