@@ -1,10 +1,7 @@
-import CheckUserAuth from '../auth/check-user-auth'
 import Transactions from '../../network/transactions'
 
 const Add = {
   async init() {
-    CheckUserAuth.checkLoginState()
-
     this._initialUI()
     this._initialListener()
   },
