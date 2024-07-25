@@ -44,11 +44,11 @@ const Transactions = {
   },
 
   async store({ name, date, amount, type, description, evidence }) {
-    const transactionsRef = collection(db, 'transactions')
+    const userId = auth.currentUser.uid
+    const transactionsRef = collection(db, `users/${userId}/transactions`)
     const data = { name, date, amount, type, description, evidence }
     return await addDoc(transactionsRef, {
       ...data,
-      userId: auth.currentUser.uid,
     })
   },
 
