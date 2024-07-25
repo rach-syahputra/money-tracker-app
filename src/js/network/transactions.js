@@ -1,6 +1,5 @@
 import axios from 'axios'
 import Config from '../config/config'
-import Utils from '../utils/utils'
 import ApiEndpoint from '../config/api-endpoint'
 
 const Transactions = {
