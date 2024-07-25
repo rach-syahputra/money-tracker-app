@@ -37,6 +37,27 @@ const Dashboard = {
       })
       this._populateDetailTransactionToModal(dataRecord)
     })
+
+    const deleteRecordBtns = document.querySelectorAll('#recordsTable tbody a[id^="delete"]')
+    deleteRecordBtns.forEach((item) => {
+      item.addEventListener('click', async (event) => {
+        event.preventDefault()
+        const recordId = event.target.dataset.recordId
+        try {
+          const response = await Transactions.destroy(recordId)
+
+          if (!response.data) {
+            return console.error(response)
+          }
+
+          window.alert('Transaction has been destroyed')
+          window.location.href = '/'
+        } catch (error) {
+          console.error(error)
+        }
+        this._initialData()
+      })
+    })
   },
 
   _populateTransactionsDataToCard(transactionsHistory = null) {
@@ -139,7 +160,10 @@ const Dashboard = {
             }">
               <i class="bi bi-pen-fill me-1"></i>Edit
             </a>
-            <a class="btn btn-sm btn-danger" href="#">
+            <a class="btn btn-sm btn-danger" href="#"
+              id="delete-${transactionRecord.id}"
+              data-record-id="${transactionRecord.id}"
+            >
               <i class="bi bi-trash3-fill me-1"></i>Delete
             </a>
           </div>
