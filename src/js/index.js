@@ -37,8 +37,8 @@ const initPages = () => {
 window.addEventListener('DOMContentLoaded', async () => {
   initPages()
 
-  CheckUserAuth.checkLoginState()
-
-  const route = detectRoute()
-  route.init()
+  CheckUserAuth.checkLoginState(async () => {
+    const route = detectRoute()
+    await route.init()
+  })
 })

@@ -4,7 +4,14 @@ import { auth } from '../../utils/firebase'
 const CheckUserAuth = {
   excludeRedirectPage: ['login.html', 'register.html'],
 
-  checkLoginState() {
+  checkLoginState(finallyCallback = null) {
+    // Parameter "finallyCallback" wajib berupa function
+    if (typeof finallyCallback !== 'object') {
+      if (typeof finallyCallback !== 'function') {
+        throw new Error('Parameter finallyCallback should be an callback function')
+      }
+    }
+
     const isUserOnAuthPage = this._isUserOnAuthPage(this.excludeRedirectPage)
     onAuthStateChanged(auth, (user) => {
       const isUserSignedIn = Boolean(user)
@@ -14,6 +21,8 @@ const CheckUserAuth = {
         } else {
           this._showLoginMenuOrUserLogMenu(isUserSignedIn)
         }
+
+        finallyCallback()
       } else {
         if (!isUserOnAuthPage) {
           window.location.replace('/auth/login.html')
