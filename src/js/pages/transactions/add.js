@@ -51,11 +51,10 @@ const Add = {
       console.log(formData)
 
       try {
-        const response = await Transactions.store(formData)
-
-        if (!response.data) {
-          return console.error(response)
-        }
+        const response = await Transactions.store({
+          ...formData,
+          evidence: formData.evidence.name,
+        })
 
         window.alert('New transaction added successfully')
         this._goToDashboardPage()
