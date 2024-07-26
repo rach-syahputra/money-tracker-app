@@ -1,18 +1,5 @@
-import axios from 'axios'
-import Config from '../config/config'
-import ApiEndpoint from '../config/api-endpoint'
 import { auth, db, storage } from '../utils/firebase'
-import {
-  addDoc,
-  collection,
-  deleteDoc,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  updateDoc,
-  where,
-} from 'firebase/firestore'
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, updateDoc } from 'firebase/firestore'
 import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 
 const Transactions = {
