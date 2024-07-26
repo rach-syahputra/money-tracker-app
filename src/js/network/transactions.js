@@ -53,8 +53,9 @@ const Transactions = {
   },
 
   async destroy(id) {
-    const transactionRef = doc(db, 'transactions', id)
-    return await deleteDoc(transactionRef)
+    const userId = auth.currentUser.uid
+    const transactionsRef = doc(db, `users/${userId}/transactions`, id)
+    return await deleteDoc(transactionsRef)
   },
 
   async storeEvidence(file) {
