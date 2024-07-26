@@ -13,7 +13,7 @@ import {
   updateDoc,
   where,
 } from 'firebase/firestore'
-import { getDownloadURL, ref } from 'firebase/storage'
+import { deleteObject, getDownloadURL, ref } from 'firebase/storage'
 
 const Transactions = {
   async getAll() {
@@ -73,6 +73,11 @@ const Transactions = {
   async getEvidenceURL(fileFullPath) {
     const storageRef = ref(storage, fileFullPath)
     return await getDownloadURL(storageRef)
+  },
+
+  async destroyEvidence(fileFullPath) {
+    const desertRef = ref(storage, fileFullPath)
+    return await deleteObject(desertRef)
   },
 }
 
