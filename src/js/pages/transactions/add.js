@@ -52,9 +52,10 @@ const Add = {
       console.log(formData)
 
       try {
+        const storageResponse = await Transactions.storeEvidence(formData.evidence)
         const response = await Transactions.store({
           ...formData,
-          evidence: formData.evidence.name,
+          evidence: storageResponse.metadata.fullPath,
           createdAt: serverTimestamp(),
           updatedAt: null,
         })
