@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Config from '../config/config'
 import ApiEndpoint from '../config/api-endpoint'
-import { auth, db } from '../utils/firebase'
+import { auth, db, storage } from '../utils/firebase'
 import {
   addDoc,
   collection,
@@ -13,6 +13,7 @@ import {
   updateDoc,
   where,
 } from 'firebase/firestore'
+import { getDownloadURL, ref } from 'firebase/storage'
 
 const Transactions = {
   async getAll() {
@@ -67,6 +68,11 @@ const Transactions = {
   async destroy(id) {
     const transactionRef = doc(db, 'transactions', id)
     return await deleteDoc(transactionRef)
+  },
+
+  async getEvidenceURL(fileFullPath) {
+    const storageRef = ref(storage, fileFullPath)
+    return await getDownloadURL(storageRef)
   },
 }
 
