@@ -13,7 +13,7 @@ import {
   updateDoc,
   where,
 } from 'firebase/firestore'
-import { deleteObject, getDownloadURL, ref } from 'firebase/storage'
+import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 
 const Transactions = {
   async getAll() {
@@ -68,6 +68,11 @@ const Transactions = {
   async destroy(id) {
     const transactionRef = doc(db, 'transactions', id)
     return await deleteDoc(transactionRef)
+  },
+
+  async storeEvidence(file) {
+    const storageRef = ref(storage, `transactions/${auth.currentUser.uid}/${file.name}`)
+    return await uploadBytes(storageRef, file)
   },
 
   async getEvidenceURL(fileFullPath) {
