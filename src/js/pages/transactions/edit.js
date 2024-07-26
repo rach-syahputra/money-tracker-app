@@ -1,6 +1,8 @@
 import { serverTimestamp } from 'firebase/firestore'
 import Transactions from '../../network/transactions'
 
+let oldEvidenceUrl = ''
+
 const Edit = {
   async init() {
     this._initialUI()
@@ -69,14 +71,17 @@ const Edit = {
       console.log(formData)
 
       try {
-        if (!formData.evidence) {
-          delete formData.evidence
+        if (formData.evidence) {
+          // Delete old evidence
+          Transactions.destroyEvidence(oldEvidenceUrl)
+
+          const storageResponse = await Transactions.storeEvidence(formData.evidence)
+          formData.evidence = storageResponse.metadata.fullPath
         }
 
         const response = await Transactions.update({
           ...formData,
           id: this._getTransactionId(),
-          evidence: formData.evidence?.name,
           updatedAt: serverTimestamp(),
         })
 
@@ -113,16 +118,16 @@ const Edit = {
       )
     }
 
-    if (
-      transactionRecord.date &&
-      transactionRecord.date.seconds !== undefined &&
-      transactionRecord.date.nanoseconds !== undefined
-    ) {
-      const dateObj = new Date(
-        transactionRecord.date.seconds * 1000 + transactionRecord.date.nanoseconds / 1000000,
-      )
-      transactionRecord.date = this._formatDate(dateObj)
-    }
+    // if (
+    //   transactionRecord.date &&
+    //   transactionRecord.date.seconds !== undefined &&
+    //   transactionRecord.date.nanoseconds !== undefined
+    // ) {
+    //   const dateObj = new Date(
+    //     transactionRecord.date.seconds * 1000 + transactionRecord.date.nanoseconds / 1000000,
+    //   )
+    //   transactionRecord.date = this._formatDate(dateObj)
+    // }
 
     const nameInput = document.querySelector('#validationCustomRecordName')
     const amountInput = document.querySelector('#validationCustomAmount')
@@ -133,10 +138,17 @@ const Edit = {
 
     nameInput.value = transactionRecord.name
     amountInput.value = transactionRecord.amount
-    dateInput.value = transactionRecord.date.slice(0, 16)
+    dateInput.value = transactionRecord.date.toDate().toISOString().slice(0, 16)
 
-    inputImagePreviewEdit.setAttribute('defaultImage', transactionRecord.evidenceUrl)
-    inputImagePreviewEdit.setAttribute('defaultImageAlt', transactionRecord.name)
+    Transactions.getEvidenceURL(transactionRecord.evidence)
+      .then((url) => {
+        inputImagePreviewEdit.setAttribute('defaultImage', url)
+        inputImagePreviewEdit.setAttribute('defaultImageAlt', transactionRecord.name)
+        oldEvidenceUrl = url
+      })
+      .catch((error) => {
+        console.error(error)
+      })
 
     descriptionInput.value = transactionRecord.description
 
